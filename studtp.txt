@@ -1,0 +1,32 @@
+local Op = {Enabled = false}
+   local Studs = {Value = 26}
+Op = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+   Name = "studs tp",
+   Function = function(callback)
+      if callback then
+         task.spawn(function()
+            local player = GetLocalPlayer()
+            local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+
+            if humanoidRootPart then
+               local teleportDirection = humanoidRootPart.CFrame.lookVector
+               local teleportOffset = teleportDirection * Studs.Value -- Change the multiplier to adjust the distance forward
+               humanoidRootPart.CFrame = humanoidRootPart.CFrame + teleportOffset
+               Op.ToggleButton(false)
+            end
+         end)
+      end
+   end
+})
+
+Studs = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateSlider({
+   Name = "Studs",
+   Min = 0,
+   Max = 30,
+   Function = function(val) end,
+   Default = 26
+})
+
+function GetLocalPlayer()
+   return game:GetService("Players").LocalPlayer
+end
